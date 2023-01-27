@@ -2,16 +2,17 @@
 
 ## Features 
 
- * PHP 8.0 via deb.sury.org
+ * PHP 8.2 via deb.sury.org
  * PHP GRPC module
  * PHP Protobuf module
+ * PHP composer 2.5.1  
  * Apache mod\_php
- 
-See also: https://hub.docker.com/r/socialsigninapp/docker-debian-gcp-php80/
+
+See also: https://hub.docker.com/r/socialsigninapp/docker-debian-gcp-php82/
 
 ## Building
 
-( http_proxy stuff is optional. )
+( http\_proxy stuff is optional. )
 
 ```bash
 docker build \
@@ -19,8 +20,8 @@ docker build \
     --build-arg=https_proxy="http://192.168.86.66:3128" \
     --no-cache \
     --rm \
-    -t socialsigninapp/docker-debian-gcp-php80:latest \
-    -t socialsigninapp/docker-debian-gcp-php80:$(date +%F) \
+    -t socialsigninapp/docker-debian-gcp-php82:latest \
+    -t socialsigninapp/docker-debian-gcp-php82:$(date +%F) \
     --pull \
     .
 ```
