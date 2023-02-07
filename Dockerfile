@@ -5,7 +5,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG http_proxy=""
 ARG https_proxy=""
 
-
 RUN echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io && \
     apt-get -q update && \
     apt-get install -y eatmydata  && \
@@ -37,7 +36,7 @@ RUN echo GMT > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdat
     && ln -sfT /dev/stdout "/var/log/apache2/access.log" \
     && ln -sfT /dev/stdout "/var/log/apache2/other_vhosts_access.log"
 
-RUN curl -so /usr/local/bin/composer https://getcomposer.org/download/2.5.1/composer.phar && chmod 755 /usr/local/bin/composer
+RUN curl -so /usr/local/bin/composer https://getcomposer.org/download/2.5.2/composer.phar && chmod 755 /usr/local/bin/composer
 
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
 EXPOSE 80
