@@ -5,6 +5,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG http_proxy=""
 ARG https_proxy=""
 
+ARG COMPOSER_SHA256="1ffd0be3f27e237b1ae47f9e8f29f96ac7f50a0bd9eef4f88cdbe94dd04bfff0"
+
 RUN echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io && \
     apt-get -q update && \
     apt-get install -y eatmydata  && \
@@ -12,7 +14,7 @@ RUN echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io && \
     apt-get clean && rm -Rf /var/lib/apt/lists/*
 
 COPY ./provisioning/sources.list /etc/apt/sources.list
-COPY ./provisioning/debsury.gpg /etc/apt/trusted.gpg.d/debsury.gpg
+COPY ./provisioning/debsury.gpg /usr/share/keyrings/deb.sury.org-php.gpg
 
 RUN apt-get -qq update && \
     eatmydata -- apt-get -qy install \
@@ -36,7 +38,11 @@ RUN echo GMT > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdat
     && ln -sfT /dev/stderr "/var/log/apache2/error.log" \
     && ln -sfT /dev/stdout "/var/log/apache2/access.log" 
 
-RUN curl -so /usr/local/bin/composer https://getcomposer.org/download/2.5.2/composer.phar && chmod 755 /usr/local/bin/composer
+RUN curl -so /usr/local/bin/composer https://getcomposer.org/download/2.7.1/composer.phar && chmod 755 /usr/local/bin/composer
+
+# 0844c3dd85bbfa039d33fbda58ae65a38a9f615fcba76948aed75bf94d7606ca  /usr/local/bin/composer
+RUN echo "${COMPOSER_SHA256}  /usr/local/bin/composer" | sha256sum --check
+
 
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
 EXPOSE 80
