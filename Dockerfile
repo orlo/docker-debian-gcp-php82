@@ -13,8 +13,8 @@ RUN echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io && \
     eatmydata -- apt-get install -y apt-transport-https ca-certificates && \
     apt-get clean && rm -Rf /var/lib/apt/lists/*
 
-COPY ./provisioning/sources.list /etc/apt/sources.list
 COPY ./provisioning/debsury.gpg /usr/share/keyrings/deb.sury.org-php.gpg
+COPY ./provisioning/sources.list /etc/apt/sources.list
 
 RUN apt-get -qq update && \
     eatmydata -- apt-get -qy install \
