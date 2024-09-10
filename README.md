@@ -5,8 +5,10 @@
  * PHP 8.2 via deb.sury.org
  * PHP GRPC module
  * PHP Protobuf module
- * PHP composer 2.5.1  
+ * PHP composer 2.7.9
  * Apache mod\_php
+
+Currently built on Debian bookworm
 
 See also: https://hub.docker.com/r/socialsigninapp/docker-debian-gcp-php82/
 

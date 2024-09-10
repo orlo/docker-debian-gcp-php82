@@ -1,11 +1,11 @@
-FROM debian:bullseye-slim AS base
+FROM debian:bookworm-slim AS base
 
 ENV LC_ALL C.UTF-8
 ARG DEBIAN_FRONTEND=noninteractive
 ARG http_proxy=""
 ARG https_proxy=""
 
-ARG COMPOSER_SHA256="1ffd0be3f27e237b1ae47f9e8f29f96ac7f50a0bd9eef4f88cdbe94dd04bfff0"
+ARG COMPOSER_SHA256="b6de5e65c199d80ba11897fbe1364e063e858d483f6a81a176c4d60f2b1d6347"
 
 RUN echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/force-unsafe-io && \
     apt-get -q update && \
@@ -21,7 +21,7 @@ RUN apt-get -qq update && \
         apache2 libapache2-mod-php8.2 \
         curl \
         git-core \
-        netcat \
+        netcat-traditional \
         jq \
         php8.2 php8.2-cli php8.2-curl php8.2-xml php8.2-mysql php8.2-mbstring php8.2-bcmath php8.2-zip php8.2-mysql php8.2-sqlite3 php8.2-opcache php8.2-xml php8.2-xsl php8.2-intl php8.2-xdebug php8.2-apcu php8.2-grpc php8.2-protobuf \
         zip unzip && \
@@ -38,9 +38,9 @@ RUN echo GMT > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdat
     && ln -sfT /dev/stderr "/var/log/apache2/error.log" \
     && ln -sfT /dev/stdout "/var/log/apache2/access.log" 
 
-RUN curl -so /usr/local/bin/composer https://getcomposer.org/download/2.7.1/composer.phar && chmod 755 /usr/local/bin/composer
+RUN curl -so /usr/local/bin/composer https://getcomposer.org/download/2.7.9/composer.phar && chmod 755 /usr/local/bin/composer
 
-# 0844c3dd85bbfa039d33fbda58ae65a38a9f615fcba76948aed75bf94d7606ca  /usr/local/bin/composer
+# b6de5e65c199d80ba11897fbe1364e063e858d483f6a81a176c4d60f2b1d6347  /usr/local/bin/composer
 RUN echo "${COMPOSER_SHA256}  /usr/local/bin/composer" | sha256sum --check
 
 
